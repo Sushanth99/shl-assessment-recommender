@@ -2,12 +2,17 @@ import streamlit as st
 import pandas as pd
 import requests
 import json
+import time
 
+# SEARCH_ENDPOINT = "https://shl-assessment-recommender-lx8s.onrender.com/search"
 SEARCH_ENDPOINT = "http://127.0.0.1:8000/search"
 
 st.title("SHL Assessment Recommendation System")
 
 def display_result(response):
+    """
+    Display the search results in a table format.
+    """
     hits = json.loads(response.content.decode())
     COLUMNS_ORDER = ["Name", "URL", "Remote_Testing" , "Adaptive_IRT", "Test_Type", "Description", "Assessment_Time"]
     df = pd.DataFrame([hit["fields"] for hit in hits])
@@ -27,8 +32,10 @@ with st.form("my-form"):
    submit_button = st.form_submit_button("Submit")
 
 if submit_button:
+    start_time = time.time()
     response = requests.get(SEARCH_ENDPOINT, params={"query": query})
-    if response.status_code == 200: 
+    st.write(f"Query time: {time.time() - start_time:.2f} seconds")
+    if response.status_code == 200:
         display_result(response)
     else: 
         st.error(f"Status Code: {response.status_code}\n{response.content.decode()}")
