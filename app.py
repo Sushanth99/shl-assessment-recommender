@@ -4,8 +4,8 @@ import requests
 import json
 import time
 
-# SEARCH_ENDPOINT = "https://shl-assessment-recommender-lx8s.onrender.com/search"
-SEARCH_ENDPOINT = "http://127.0.0.1:8000/search"
+SEARCH_ENDPOINT = "https://shl-assessment-recommender-lx8s.onrender.com/search"
+# SEARCH_ENDPOINT = "http://127.0.0.1:8000/search"
 
 st.title("SHL Assessment Recommendation System")
 
